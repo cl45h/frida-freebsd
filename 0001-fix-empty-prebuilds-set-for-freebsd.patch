@@ -1,0 +1,15 @@
+diff --git a/compat/build.py b/compat/build.py
+index 1096227..2a4d4bf 100644
+--- a/compat/build.py
++++ b/compat/build.py
+@@ -462,7 +462,9 @@ def compile(privdir: Path, state: State):
+ 
+             host_machine = MachineSpec(state.host_os, group.arch, state.host_config, group.triplet)
+ 
+-            if state.glib_flavor == "upstream":
++            if state.allowed_prebuilds is not None and (len(state.allowed_prebuilds) == 0 or state.allowed_prebuilds == {''} or state.allowed_prebuilds == set()):
++                allowed = set()
++            elif state.glib_flavor == "upstream":
+                 allowed = None
+             else:
+                 allowed = state.allowed_prebuilds
